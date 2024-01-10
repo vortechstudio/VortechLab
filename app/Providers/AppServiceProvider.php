@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\VortechAPI\Social\CercleService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $cercleI = new CercleService();
+        \View::share('cercles', $cercleI->all());
     }
 }
