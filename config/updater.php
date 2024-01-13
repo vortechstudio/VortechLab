@@ -24,7 +24,7 @@ return [
     ],
 
     // run php artisan migrate after update?
-    'migrate' => true,
+    'migrate' => false,
 
     // run seeders after update?
     'seeders' => [
