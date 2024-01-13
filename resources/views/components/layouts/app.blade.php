@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        {!! \Artesaos\SEOTools\Facades\SEOTools::generate() !!}
         <title>{{ $title ?? 'Page Title' }}</title>
         <link rel="stylesheet" href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}">
         <link rel="stylesheet" href="{{ asset('/assets/css/style.bundle.css') }}">
@@ -2361,7 +2362,7 @@
                 <span class="path2"></span>
             </i>
         </div>
-        <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script>
+        <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}" defer></script>
         <script src="{{ asset('/assets/js/scripts.bundle.js') }}"></script>
         @livewireScripts
         @vite(['resources/js/app.js'])

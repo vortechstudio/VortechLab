@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
         if(config('app.env') === 'local' || config('app.env') === 'staging') {
             $schedule->command('log-viewer:clear')->daily();
         }
+
+        $schedule->command('sitemap')->daily();
     }
 
     /**
