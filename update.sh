@@ -10,6 +10,6 @@ if [ "$ENV" == "staging" ]; then
 else
     echo "Deploying PROD environment"
     php artisan down
-    php artisan optimize:clear
+    php artisan update:update
     php artisan up
 fi
