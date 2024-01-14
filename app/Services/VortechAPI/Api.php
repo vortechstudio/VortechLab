@@ -11,6 +11,11 @@ class Api
         $this->endpoint = "https://auth.".config('app.domain').'/api/';
     }
 
+    public function searching($terme, $category = null)
+    {
+        return $this->post('search', ["query" => $terme, "category" => $category]);
+    }
+
     private function getResponse($request)
     {
         try {
