@@ -13,7 +13,7 @@
 
         <div class="menu menu-rounded menu-column menu-lg-row menu-active-bg menu-title-gray-700 menu-state-primary menu-arrow-gray-500 fw-bold my-5 my-lg-0 align-items-stretch px-2 px-lg-0 fs-3" id="#header_menu" data-kt-menu="true">
             <div class="menu-item me-0 me-lg-2">
-                <a href="" class="menu-link {{ request()->route()->named('home') ? 'active' : '' }}" wire:navigate>Accueil</a>
+                <a href="{{ route('home') }}" class="menu-link {{ request()->route()->named('home') ? 'active' : '' }}" wire:navigate>Accueil</a>
             </div>
             <div class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start">
                                                 <span class="menu-link py-3">
