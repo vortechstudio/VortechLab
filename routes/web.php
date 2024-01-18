@@ -18,6 +18,11 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/test', function () {
-    $api = new \App\Services\VortechAPI\Api();
-    dd($api->searching('Article'));
+    $api = new \App\Services\VortechAPI\Social\PostCercle();
+    dd($api->tags());
+});
+
+Route::prefix('posts')->group(function () {
+    Route::get('/create/{type?}', \App\Livewire\Post\Create::class)->name('posts.create');
+Route::get('/preview', \App\Livewire\Post\Preview::class)->name('posts.preview');
 });
