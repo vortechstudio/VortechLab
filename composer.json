@@ -10,6 +10,7 @@
         "algolia/algoliasearch-client-php": "^3.4",
         "arcanedev/log-viewer": "^10.0",
         "artesaos/seotools": "^1.2",
+        "creativeorange/gravatar": "^1.0",
         "dasundev/livewire-dropzone": "^1.0",
         "devmoath/jira-laravel": "^0.1.2",
         "guzzlehttp/guzzle": "^7.2",
