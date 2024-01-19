@@ -22,6 +22,8 @@
         "livewire/livewire": "^3.2",
         "pharaonic/livewire-select2": "^1.2",
         "pharaonic/livewire-tagify": "^1.2",
+        "php-flasher/flasher-laravel": "^1.15",
+        "php-flasher/flasher-sweetalert-laravel": "^1.15",
         "salahhusa9/laravel-updater": "^1.0",
         "silviolleite/laravelpwa": "^2.0",
         "spatie/laravel-sitemap": "^7.0"
