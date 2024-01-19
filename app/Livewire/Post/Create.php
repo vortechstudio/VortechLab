@@ -5,6 +5,7 @@ namespace App\Livewire\Post;
 use Alaouy\Youtube\Facades\Youtube;
 use App\Services\VortechAPI\Social\CercleService;
 use App\Services\VortechAPI\Social\PostCercle;
+use App\Services\VortechAPI\User;
 use Illuminate\Http\File;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Joelwmale\LivewireQuill\Traits\HasQuillEditor;
@@ -26,13 +27,16 @@ class Create extends Component
     public $video_link = '';
     public $cercleList;
     public $tagsList;
+    public $user;
 
     public function mount()
     {
         $apiCercle = new CercleService();
         $apiPosts = new PostCercle();
+        $apiUser = new User();
         $this->cercleList = $apiCercle->all();
         $this->tagsList = $apiPosts->tags();
+        $this->user = \Session::has('user_uuid') ? $apiUser->info()->user : null;
         //dd($this->tagsList);
     }
 
@@ -85,6 +89,7 @@ class Create extends Component
             "images" => $this->images,
             "video_link" => $this->video_link,
             "type" => $this->type,
+            "user" => $this->user,
         ]);
     }
 
@@ -105,6 +110,10 @@ class Create extends Component
         ]);
 
         $api = new PostCercle();
+        if($this->user == null) {
+            $this->alert('error', 'Vous devez être connecté pour créer un poste');
+            return;
+        }
         $response = $api->create([
             "title" => $this->title,
             "contenue" => $this->content,
@@ -112,7 +121,7 @@ class Create extends Component
             "cercle" => $this->cercle,
             "tags" => $this->tags,
             "type" => "text",
-            "user_id" => 1
+            "user_id" => $this->user->id
         ]);
 
         if($response && !empty($this->couverture)) {
@@ -136,6 +145,10 @@ class Create extends Component
 
         $api = new PostCercle();
         $content = empty($this->content) ? $this->defineImagesContent() : $this->content;
+        if($this->user == null) {
+            $this->alert('error', 'Vous devez être connecté pour créer un poste');
+            return;
+        }
         $response = $api->create([
             "title" => $this->title,
             "contenue" => $content,
@@ -143,7 +156,7 @@ class Create extends Component
             "cercle" => $this->cercle,
             "tags" => $this->tags,
             "type" => "image",
-            "user_id" => 1
+            "user_id" => $this->user->id
         ]);
 
 
@@ -185,6 +198,10 @@ class Create extends Component
         $tags = $video->snippet->tags;
 
         $api = new PostCercle();
+        if($this->user == null) {
+            $this->alert('error', 'Vous devez être connecté pour créer un poste');
+            return;
+        }
         $response = $api->create([
             "title" => $title,
             "contenue" => $description,
@@ -192,7 +209,7 @@ class Create extends Component
             "cercle" => $this->cercle,
             "tags" => $tags,
             "type" => "video",
-            "user_id" => 1,
+            "user_id" => $this->user->id,
             "video_link" => $this->video_link
         ]);
 
