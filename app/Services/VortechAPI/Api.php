@@ -45,8 +45,16 @@ class Api
     {
         $url = $this->endpoint.$action;
 
-        $request = Http::withoutVerifying()
-            ->post($url, $params);
+        try {
+            $request = Http::withoutVerifying()
+                ->post($url, $params);
+        }catch (\Exception $exception) {
+            \Log::emergency($exception->getMessage(), [
+                'request' => $params,
+                "url" => $url,
+            ]);
+            return $exception->getMessage();
+        }
 
         return $this->getResponse($request);
     }
