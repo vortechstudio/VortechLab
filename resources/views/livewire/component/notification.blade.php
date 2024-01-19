@@ -19,32 +19,29 @@
                     <span class="fs-8 opacity-75 ps-3">24 reports</span></h3>
                 <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
                     Message de notification
-                    <span class="fs-8 opacity-75 ps-3">({{ $user->user->unreadNotifications()->count() }})</span>
+                    <span class="fs-8 opacity-75 ps-3">({{ count($user->user->unread_notifications) }})</span>
                 </h3>
                 <!--end::Title-->
             </div>
             <!--end::Heading-->
             <!--begin::Items-->
             <div class="scroll-y mh-325px my-5 px-8">
-                @foreach($user->user->unreadNotifications()->take(10)->get() as $notification)
+                @foreach(collect($user->user->unread_notifications)->take(10) as $notification)
                     <!--begin::Item-->
                     <div class="d-flex flex-stack py-4">
                         <!--begin::Section-->
                         <div class="d-flex align-items-center">
                             <!--begin::Symbol-->
                             <div class="symbol symbol-35px me-4">
-							<span class="symbol-label bg-light-{{ $notification->data['type'] }}">
-								<i class="ki-duotone ki-abstract-28 fs-2 text-primary">
-									<span class="path1"></span>
-									<span class="path2"></span>
-								</i>
+							<span class="symbol-label bg-light-{{ $notification->data->type }}">
+                                <i class="fa-solid {{ $notification->data->icon }} fs-2 text-{{ $notification->data->type }}"></i>
 							</span>
                             </div>
                             <!--end::Symbol-->
                             <!--begin::Title-->
                             <div class="mb-0 me-2">
-                                <a href="#" class="fs-6 text-gray-800 text-hover-{{ $notification->data['type'] }} fw-bold">{{ $notification->data['title'] }}</a>
-                                <div class="text-gray-500 fs-7">{{ $notification->data['description'] }}</div>
+                                <a href="#" class="fs-6 text-gray-800 text-hover-{{ $notification->data->type }} fw-bold">{{ $notification->data->title }}</a>
+                                <div class="text-gray-500 fs-7">{{ $notification->data->description }}</div>
                             </div>
                             <!--end::Title-->
                         </div>
