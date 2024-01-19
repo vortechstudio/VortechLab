@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\VortechAPI\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,11 +19,14 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/test', function () {
-    $api = new \App\Services\VortechAPI\Social\PostCercle();
-    dd($api->tags());
+    $userApi = new User();
+    dd($userApi->info());
+
 });
 
 Route::prefix('posts')->group(function () {
     Route::get('/create/{type?}', \App\Livewire\Post\Create::class)->name('posts.create');
-Route::get('/preview', \App\Livewire\Post\Preview::class)->name('posts.preview');
+    Route::get('/preview', \App\Livewire\Post\Preview::class)->name('posts.preview');
 });
+
+include "auth.php";
