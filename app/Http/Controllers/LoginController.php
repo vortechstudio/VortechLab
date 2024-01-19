@@ -19,4 +19,11 @@ class LoginController extends Controller
             return redirect()->intended();
         }
     }
+
+    public function logout(Request $request)
+    {
+        \Session::flush();
+        flash()->addSuccess("Déconnexion effectuer avec succès", "A bientôt");
+        return redirect()->intended();
+    }
 }
