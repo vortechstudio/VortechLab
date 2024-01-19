@@ -10,10 +10,14 @@
             <div class="card-header">
                 <div class="d-flex align-items-center pt-9">
                     <div class="symbol symbol-50px me-5">
-                        <img src="https://placehold.co/50" alt="">
+                        @if(\Creativeorange\Gravatar\Facades\Gravatar::exists($this->info['user']['email']))
+                            <img src="{{ \Creativeorange\Gravatar\Facades\Gravatar::get($this->info['user']['email']) }}" alt="">
+                        @else
+                            <img src="https://placehold.co/50" alt="">
+                        @endif
                     </div>
                     <div class="flex-grow-1">
-                        <a href="" class="text-gray-800 text-hover-primary fs-4 fw-bold">Administrateur</a>
+                        <a href="" class="text-gray-800 text-hover-primary fs-4 fw-bold">{{ $this->info['user']['name'] }}</a>
                         <div class="text-gray-500 fw-semibold d-block">Aujourd'hui</div>
                     </div>
                 </div>
@@ -45,10 +49,14 @@
             <div class="card-header">
                 <div class="d-flex align-items-center pt-9">
                     <div class="symbol symbol-50px me-5">
-                        <img src="https://placehold.co/50" alt="">
+                        @if(\Creativeorange\Gravatar\Facades\Gravatar::exists($this->info['user']['email']))
+                            <img src="{{ \Creativeorange\Gravatar\Facades\Gravatar::get($this->info['user']['email']) }}" alt="">
+                        @else
+                            <img src="https://placehold.co/50" alt="">
+                        @endif
                     </div>
                     <div class="flex-grow-1">
-                        <a href="" class="text-gray-800 text-hover-primary fs-4 fw-bold">Administrateur</a>
+                        <a href="" class="text-gray-800 text-hover-primary fs-4 fw-bold">{{ $this->info['user']['name'] }}</a>
                         <div class="text-gray-500 fw-semibold d-block">Aujourd'hui</div>
                     </div>
                 </div>

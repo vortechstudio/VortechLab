@@ -16,7 +16,7 @@ class Notification extends Component
     }
     public function render()
     {
-        //dd($this->user);
+
         return view('livewire.component.notification');
     }
 }

@@ -10,6 +10,7 @@
         "algolia/algoliasearch-client-php": "^3.4",
         "arcanedev/log-viewer": "^10.0",
         "artesaos/seotools": "^1.2",
+        "creativeorange/gravatar": "^1.0",
         "dasundev/livewire-dropzone": "^1.0",
         "devmoath/jira-laravel": "^0.1.2",
         "guzzlehttp/guzzle": "^7.2",
@@ -22,6 +23,8 @@
         "livewire/livewire": "^3.2",
         "pharaonic/livewire-select2": "^1.2",
         "pharaonic/livewire-tagify": "^1.2",
+        "php-flasher/flasher-laravel": "^1.15",
+        "php-flasher/flasher-sweetalert-laravel": "^1.15",
         "salahhusa9/laravel-updater": "^1.0",
         "silviolleite/laravelpwa": "^2.0",
         "spatie/laravel-sitemap": "^7.0"
