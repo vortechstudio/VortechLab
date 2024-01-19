@@ -186,5 +186,6 @@ return [
     ])->toArray(),
 
     'domain' => env('APP_DOMAIN', 'localhost'),
+    'youtube_api_key' => env('YOUTUBE_API_KEY'),
 
 ];
