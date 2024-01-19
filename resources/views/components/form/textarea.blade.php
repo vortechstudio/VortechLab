@@ -1,7 +1,7 @@
 @if($type == 'simple')
     <div class="mb-10">
         @if(!$noLabel)
-            <label for="{{ $name }}" class="form-label {{ $required ? 'required' : '' }}">{{ $label }}</label>
+            <label for="{{ $name }}" class="form-label {{ $required ? 'required' : '' }} fw-bold">{{ $label }}</label>
         @endif
         <textarea
             class="form-control {{ $class }} @error("$name") is-invalid @enderror"
@@ -21,7 +21,7 @@
 @if($type == 'ckeditor')
     <div class="mb-10" wire:ignore>
         @if(!$noLabel)
-            <label for="{{ $name }}" class="form-label {{ $required ? 'required' : '' }}">{{ $label }}</label>
+            <label for="{{ $name }}" class="form-label {{ $required ? 'required' : '' }} fw-bold">{{ $label }}</label>
         @endif
         <div wire:ignore>
             <textarea
@@ -55,7 +55,7 @@
 @if($type == 'tinymce')
     <div class="mb-10" wire:ignore>
         @if(!$noLabel)
-            <label for="{{ $name }}" class="form-label {{ $required ? 'required' : '' }}">{{ $label }}</label>
+            <label for="{{ $name }}" class="form-label {{ $required ? 'required' : '' }} fw-bold">{{ $label }}</label>
         @endif
         <div wire:ignore>
             <textarea

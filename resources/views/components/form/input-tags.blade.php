@@ -1,6 +1,6 @@
 <div class="mb-10">
     @if(!$noLabel)
-        <label for="{{ $name }}" class="form-label {{ $required ? 'required' : '' }}">{{ $label }}</label>
+        <label for="{{ $name }}" class="form-label {{ $required ? 'required' : '' }} fw-bold">{{ $label }}</label>
     @endif
     <input
         type="{{ $type }}"

@@ -1,4 +1,5 @@
 @import "inputFile.css";
+@import "@dasundev/livewire-dropzone-styles";
 .bot-mask {
     top: auto;
     bottom: 0;

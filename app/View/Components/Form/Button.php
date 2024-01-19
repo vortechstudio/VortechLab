@@ -16,7 +16,8 @@ class Button extends Component
         public string $textSubmit = 'Valider',
         public string $textLoading = 'Veuillez patienter...',
         public string $size = '',
-        public string $rounded = ''
+        public string $rounded = '',
+        public string $id = '',
     ) {
     }
 

@@ -1,6 +1,6 @@
 <div class="mb-10" wire:ignore.self>
     @if(!$noLabel)
-    <label for="{{ $name }}" class="form-label {{ $required ? 'required' : '' }}">{{ $label }}</label>
+    <label for="{{ $name }}" class="form-label {{ $required ? 'required' : '' }} fw-bold">{{ $label }}</label>
     @endif
     @if($selectType == 'select2')
         <select id="{{ $name }}" wire:model.prevent="{{ $isModel ? $model.'.'.$name : $name }}" class="form-select" data-control="select2" data-placeholder="{{ $required && $noLabel ? ($placeholder ? $placeholder.'*' : $label.'*') : ($placeholder ? $placeholder : $label) }}">
