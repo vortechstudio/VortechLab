@@ -14,19 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::middleware(['shared'])->group(function () {
+    Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
+    Route::get('/home', \App\Livewire\Home\Recommanded::class)->name('home.recommanded');
+    Route::get('/home/timeline', \App\Livewire\Home\Timeline::class)->name('home.timeline');
+    Route::get('/home/events', \App\Livewire\Home\Events::class)->name('home.events');
 
-Route::get('/test', function () {
-    $userApi = new User();
-    dd($userApi->info());
+    Route::get('/test', function () {
+        $userApi = new User();
+        dd($userApi->info());
+    });
 
-});
-
-Route::prefix('posts')->group(function () {
-    Route::get('/create/{type?}', \App\Livewire\Post\Create::class)->name('posts.create');
-    Route::get('/preview', \App\Livewire\Post\Preview::class)->name('posts.preview');
+    Route::prefix('posts')->group(function () {
+        Route::get('/create/{type?}', \App\Livewire\Post\Create::class)->name('posts.create');
+        Route::get('/preview', \App\Livewire\Post\Preview::class)->name('posts.preview');
+    });
 });
 
 include "auth.php";

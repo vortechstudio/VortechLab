@@ -11,9 +11,17 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         if($request->get('logged') == true) {
-            \Session::push('user_uuid', $request->get('user_uuid'));
-            flash()->addSuccess("Connexion effectuer avec succès", "Bienvenue $request->name");
-            return redirect()->intended();
+            $userApi = new \App\Services\VortechAPI\User();
+            try {
+                \Session::push('user_uuid', $request->get('user_uuid'));
+                $user = $userApi->info()->user;
+                \Session::push('user', $user);
+                flash()->addSuccess("Connexion effectuer avec succès", "Bienvenue $request->name");
+                return redirect()->intended();
+            }catch (\Exception $e) {
+                flash()->addError("Connexion échouer", "Erreur lors de la récupération des informations de l'utilisateur");
+                return redirect()->intended();
+            }
         } else {
             flash()->addError("Connexion échouer", "Veuillez vérifier vos informations de connexion");
             return redirect()->intended();
