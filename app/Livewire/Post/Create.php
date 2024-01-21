@@ -36,7 +36,7 @@ class Create extends Component
         $apiUser = new User();
         $this->cercleList = $apiCercle->all();
         $this->tagsList = $apiPosts->tags();
-        $this->user = \Session::has('user_uuid') ? $apiUser->info()->user : null;
+        $this->user = \Session::has('user_uuid') ? $apiUser->info()->user->info : null;
         //dd($this->tagsList);
     }
 
@@ -110,6 +110,7 @@ class Create extends Component
         ]);
 
         $api = new PostCercle();
+        $arrayFileImg = collect();
         if($this->user == null) {
             $this->alert('error', 'Vous devez être connecté pour créer un poste');
             return;
@@ -126,6 +127,9 @@ class Create extends Component
 
         if($response && !empty($this->couverture)) {
             $this->couverture->storeAs('/posts/text/'.now()->year.'/'.now()->month.'/'.now()->day, $response->id.'.'.$this->couverture->extension());
+            $arrayFileImg->push([
+                "/posts/text/".now()->year."/".now()->month."/".now()->day."/".$response->id.".".$this->couverture->extension(),
+            ]);
         }
         if($response) {
             $this->alert('success', 'Poste créé avec succès');
@@ -145,10 +149,19 @@ class Create extends Component
 
         $api = new PostCercle();
         $content = empty($this->content) ? $this->defineImagesContent() : $this->content;
+        $arrayFileImg = collect();
         if($this->user == null) {
             $this->alert('error', 'Vous devez être connecté pour créer un poste');
             return;
         }
+
+        foreach ($this->images as $k => $image) {
+            \Storage::putFileAs('/posts/images/'.now()->year.'/'.now()->month.'/'.now()->day, new File($image['path']), $response->id.'-'.$k.'.'.$image['extension']);
+            $arrayFileImg->push([
+                "/posts/images/".now()->year."/".now()->month."/".now()->day."/".$response->id."-".$k.".".$image['extension'],
+            ]);
+        }
+
         $response = $api->create([
             "title" => $this->title,
             "contenue" => $content,
@@ -156,15 +169,9 @@ class Create extends Component
             "cercle" => $this->cercle,
             "tags" => $this->tags,
             "type" => "image",
-            "user_id" => $this->user->id
+            "user_id" => $this->user->id,
+            "img_file" => $arrayFileImg->toJson()
         ]);
-
-
-        if($response) {
-            foreach ($this->images as $k => $image) {
-                \Storage::putFileAs('/posts/images/'.now()->year.'/'.now()->month.'/'.now()->day, new File($image['path']), $response->id.'-'.$k.'.'.$image['extension']);
-            }
-        }
 
         if($response) {
             $this->alert('success', 'Poste créé avec succès');

@@ -20,14 +20,14 @@
                     <span class="fs-8 opacity-75 ps-3">24 reports</span></h3>
                 <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
                     Message de notification
-                    <span class="fs-8 opacity-75 ps-3">({{ count($user->unread_notifications) }})</span>
+                    <span class="fs-8 opacity-75 ps-3">({{ count($user->info->unread_notifications) }})</span>
                 </h3>
                 <!--end::Title-->
             </div>
             <!--end::Heading-->
             <!--begin::Items-->
             <div class="scroll-y mh-325px my-5 px-8">
-                @foreach(collect($user->unread_notifications)->take(10) as $notification)
+                @foreach(collect($user->info->unread_notifications)->take(10) as $notification)
                     <!--begin::Item-->
                     <div class="d-flex flex-stack py-4">
                         <!--begin::Section-->

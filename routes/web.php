@@ -29,6 +29,8 @@ Route::middleware(['shared'])->group(function () {
         Route::get('/create/{type?}', \App\Livewire\Post\Create::class)->name('posts.create');
         Route::get('/preview', \App\Livewire\Post\Preview::class)->name('posts.preview');
     });
+
+    include "account.php";
 });
 
 include "auth.php";

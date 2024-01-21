@@ -28,4 +28,22 @@ class PostCercle extends Api
             return $e->getMessage();
         }
     }
+
+    public function all(array|null $request)
+    {
+        try {
+            return $this->get('posts', $request);
+        }catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function destroy(int $id)
+    {
+        try {
+            return $this->delete('posts/'.$id);
+        }catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }

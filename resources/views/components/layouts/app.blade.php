@@ -23,7 +23,7 @@
                     <div class="toolbar py-5 pb-lg-15 bg-opacity-75" id="toolbar">
                         <div id="toolbar_container" class="container-xxl d-flex flex-stack flex-wrap"></div>
                     </div>
-                    <div id="content_container" class="h-auto d-flex flex-column-fluid align-items-start container-xxl bg-white rounded-4 bot-mask bg-mask">
+                    <div id="content_container" class="h-auto d-flex flex-column-fluid align-items-start container-xxl bg-light rounded-4 bot-mask bg-mask">
                         <div id="content" class="content flex-row-fluid h-auto my-10">
                             @if(isset($slot))
                                 {{ $slot }}
@@ -44,6 +44,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}" defer></script>
         <script src="{{ asset('/assets/js/scripts.bundle.js') }}"></script>
+        <script src="{{ asset('/assets/plugins/custom/fslightbox/fslightbox.bundle.js') }}"></script>
+        <script id="pingpilot" src="https://widget.pingpilot.com" data-signal="vortechstudio.atlassian.net" async></script>
         @livewireScripts
         @vite(['resources/js/app.js'])
         <x-livewire-alert::scripts />
