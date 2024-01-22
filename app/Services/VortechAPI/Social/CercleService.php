@@ -6,7 +6,6 @@ use App\Services\VortechAPI\Api;
 
 class CercleService extends Api
 {
-
     public function all()
     {
         return $this->get('cercles');
@@ -31,5 +30,4 @@ class CercleService extends Api
 
         return $cercles->where('slug', $slug)->first();
     }
-
 }

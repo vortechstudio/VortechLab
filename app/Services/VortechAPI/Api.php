@@ -7,20 +7,22 @@ use Illuminate\Support\Facades\Http;
 class Api
 {
     protected string $endpoint;
-    public function __construct() {
-        $this->endpoint = "https://auth.".config('app.domain').'/api/';
+
+    public function __construct()
+    {
+        $this->endpoint = 'https://auth.'.config('app.domain').'/api/';
     }
 
     public function searching($terme, $category = null)
     {
-        return $this->post('search', ["query" => $terme, "category" => $category]);
+        return $this->post('search', ['query' => $terme, 'category' => $category]);
     }
 
     private function getResponse($request)
     {
         try {
             $response = $request->throw();
-            if(request()->wantsJson()) {
+            if (request()->wantsJson()) {
                 return $response->json();
             } else {
                 return $response->object();
@@ -48,11 +50,12 @@ class Api
         try {
             $request = Http::withoutVerifying()
                 ->post($url, $params);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             \Log::emergency($exception->getMessage(), [
                 'request' => $params,
-                "url" => $url,
+                'url' => $url,
             ]);
+
             return $exception->getMessage();
         }
 

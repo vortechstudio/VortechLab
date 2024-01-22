@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
         $cercleI = new CercleService();
         $userApi = new User();
         \View::share('cercles', $cercleI->all());
-        if(\Session::has("user_uuid")) {
+        if (\Session::has('user_uuid')) {
             \View::share('user', $userApi->info());
         }
     }

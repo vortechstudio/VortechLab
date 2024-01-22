@@ -14,6 +14,7 @@ class Notification extends Component
         $userApi = new User();
         $this->user = $userApi->info();
     }
+
     public function render()
     {
 

@@ -29,4 +29,4 @@ Route::prefix('posts')->group(function () {
     Route::get('/preview', \App\Livewire\Post\Preview::class)->name('posts.preview');
 });
 
-include "auth.php";
+include 'auth.php';

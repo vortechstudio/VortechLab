@@ -15,18 +15,30 @@ use Livewire\WithFileUploads;
 
 class Create extends Component
 {
-    use LivewireAlert, WithFileUploads, HasQuillEditor;
+    use HasQuillEditor, LivewireAlert, WithFileUploads;
+
     public $type;
+
     public $title = '';
+
     public $content = '';
-    public $visibility = "public";
-    public $tags = "";
+
+    public $visibility = 'public';
+
+    public $tags = '';
+
     public $cercle = 0;
+
     public $couverture;
+
     public $images = [];
+
     public $video_link = '';
+
     public $cercleList;
+
     public $tagsList;
+
     public $user;
 
     public function mount()
@@ -42,7 +54,7 @@ class Create extends Component
 
     public function create()
     {
-        match($this->type) {
+        match ($this->type) {
             'text' => $this->createText(),
             'image' => $this->createImage(),
             'video' => $this->createVideo(),
@@ -60,36 +72,36 @@ class Create extends Component
 
     public function previewPost()
     {
-        if($this->type == 'text') {
+        if ($this->type == 'text') {
             $this->validate([
-                "title" => "required|max:200",
-                "content" => "required",
-                "cercle" => "required",
+                'title' => 'required|max:200',
+                'content' => 'required',
+                'cercle' => 'required',
             ]);
         } elseif ($this->type == 'images') {
             $this->validate([
-                "title" => "required|max:200",
-                "images" => "required",
-                "cercle" => "required",
+                'title' => 'required|max:200',
+                'images' => 'required',
+                'cercle' => 'required',
             ]);
         } elseif ($this->type == 'video') {
             $this->validate([
-                "title" => "required|max:200",
-                "video_link" => "required",
-                "cercle" => "required",
+                'title' => 'required|max:200',
+                'video_link' => 'required',
+                'cercle' => 'required',
             ]);
         }
         $this->redirectRoute('posts.preview', [
-            "title" => $this->title,
-            "content" => $this->content,
-            "visibility" => $this->visibility,
-            "tags" => $this->tags,
-            "cercle" => $this->cercle,
-            "couverture" => !empty($this->couverture) ? $this->couverture->temporaryUrl() : null,
-            "images" => $this->images,
-            "video_link" => $this->video_link,
-            "type" => $this->type,
-            "user" => $this->user,
+            'title' => $this->title,
+            'content' => $this->content,
+            'visibility' => $this->visibility,
+            'tags' => $this->tags,
+            'cercle' => $this->cercle,
+            'couverture' => ! empty($this->couverture) ? $this->couverture->temporaryUrl() : null,
+            'images' => $this->images,
+            'video_link' => $this->video_link,
+            'type' => $this->type,
+            'user' => $this->user,
         ]);
     }
 
@@ -103,31 +115,32 @@ class Create extends Component
     private function createText()
     {
         $this->validate([
-            "title" => "required|max:200",
-            "content" => "required",
-            "visibility" => "required",
-            "cercle" => "required",
+            'title' => 'required|max:200',
+            'content' => 'required',
+            'visibility' => 'required',
+            'cercle' => 'required',
         ]);
 
         $api = new PostCercle();
-        if($this->user == null) {
+        if ($this->user == null) {
             $this->alert('error', 'Vous devez être connecté pour créer un poste');
+
             return;
         }
         $response = $api->create([
-            "title" => $this->title,
-            "contenue" => $this->content,
-            "visibility" => $this->visibility,
-            "cercle" => $this->cercle,
-            "tags" => $this->tags,
-            "type" => "text",
-            "user_id" => $this->user->id
+            'title' => $this->title,
+            'contenue' => $this->content,
+            'visibility' => $this->visibility,
+            'cercle' => $this->cercle,
+            'tags' => $this->tags,
+            'type' => 'text',
+            'user_id' => $this->user->id,
         ]);
 
-        if($response && !empty($this->couverture)) {
+        if ($response && ! empty($this->couverture)) {
             $this->couverture->storeAs('/posts/text/'.now()->year.'/'.now()->month.'/'.now()->day, $response->id.'.'.$this->couverture->extension());
         }
-        if($response) {
+        if ($response) {
             $this->alert('success', 'Poste créé avec succès');
             $this->redirectRoute('home');
         } else {
@@ -138,35 +151,35 @@ class Create extends Component
     public function createImage()
     {
         $this->validate([
-            "title" => "required|max:200",
-            "visibility" => "required",
-            "cercle" => "required",
+            'title' => 'required|max:200',
+            'visibility' => 'required',
+            'cercle' => 'required',
         ]);
 
         $api = new PostCercle();
         $content = empty($this->content) ? $this->defineImagesContent() : $this->content;
-        if($this->user == null) {
+        if ($this->user == null) {
             $this->alert('error', 'Vous devez être connecté pour créer un poste');
+
             return;
         }
         $response = $api->create([
-            "title" => $this->title,
-            "contenue" => $content,
-            "visibility" => $this->visibility,
-            "cercle" => $this->cercle,
-            "tags" => $this->tags,
-            "type" => "image",
-            "user_id" => $this->user->id
+            'title' => $this->title,
+            'contenue' => $content,
+            'visibility' => $this->visibility,
+            'cercle' => $this->cercle,
+            'tags' => $this->tags,
+            'type' => 'image',
+            'user_id' => $this->user->id,
         ]);
 
-
-        if($response) {
+        if ($response) {
             foreach ($this->images as $k => $image) {
                 \Storage::putFileAs('/posts/images/'.now()->year.'/'.now()->month.'/'.now()->day, new File($image['path']), $response->id.'-'.$k.'.'.$image['extension']);
             }
         }
 
-        if($response) {
+        if ($response) {
             $this->alert('success', 'Poste créé avec succès');
             $this->redirectRoute('home');
         } else {
@@ -180,15 +193,16 @@ class Create extends Component
         foreach ($this->images as $k => $image) {
             $content .= '<img src="'.$image['temporaryUrl'].'" alt="'.$image['name'].'" />';
         }
+
         return $content;
     }
 
     public function createVideo()
     {
         $this->validate([
-            "video_link" => "required",
-            "cercle" => "required",
-            "visibility" => "required",
+            'video_link' => 'required',
+            'cercle' => 'required',
+            'visibility' => 'required',
         ]);
         $videoId = Youtube::parseVidFromURL($this->video_link);
         $video = Youtube::getVideoInfo($videoId);
@@ -198,22 +212,23 @@ class Create extends Component
         $tags = $video->snippet->tags;
 
         $api = new PostCercle();
-        if($this->user == null) {
+        if ($this->user == null) {
             $this->alert('error', 'Vous devez être connecté pour créer un poste');
+
             return;
         }
         $response = $api->create([
-            "title" => $title,
-            "contenue" => $description,
-            "visibility" => $this->visibility,
-            "cercle" => $this->cercle,
-            "tags" => $tags,
-            "type" => "video",
-            "user_id" => $this->user->id,
-            "video_link" => $this->video_link
+            'title' => $title,
+            'contenue' => $description,
+            'visibility' => $this->visibility,
+            'cercle' => $this->cercle,
+            'tags' => $tags,
+            'type' => 'video',
+            'user_id' => $this->user->id,
+            'video_link' => $this->video_link,
         ]);
 
-        if($response) {
+        if ($response) {
             $this->alert('success', 'Poste créé avec succès');
             $this->redirectRoute('home');
         } else {
