@@ -19,6 +19,7 @@ class PostList extends Component
     #[Title("Profil")]
     public function render()
     {
+        //dd($this->user);
         return view('livewire.account-center.post-list')
             ->layout('components.layouts.app');
     }

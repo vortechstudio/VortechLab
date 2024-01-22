@@ -3,6 +3,7 @@
 namespace App\Services\VortechAPI\Social;
 
 use App\Services\VortechAPI\Api;
+use Log;
 
 class PostCercle extends Api
 {
@@ -25,6 +26,43 @@ class PostCercle extends Api
                 'file' => 'app/Services/VortechAPI/Social/PostCercle.php',
             ]);
 
+            return $e->getMessage();
+        }
+    }
+
+    public function like(int $id)
+    {
+
+        try {
+            return $this->post('posts/'.$id.'/like', [
+                "user_id" => \Session::get('user')[0]->info->id,
+            ]);
+        } catch (\Exception $e) {
+            Log::emergency($e->getMessage(), [
+                'request' => $id,
+                'file' => 'app/Services/VortechAPI/Social/PostCercle.php',
+                'line' => $e->getLine(),
+            ]);
+            return $e->getMessage();
+        }
+    }
+
+    public function unlike(int $id)
+    {
+
+        try {
+            $post = collect($this->all([]))->where('id', $id)->first();
+            return $this->post('posts/'.$id.'/unlike', [
+                "user_id" => \Session::get('user')[0]->info->id,
+                "likeable_type" => get_class($post),
+                "id" => $post->id
+            ]);
+        } catch (\Exception $e) {
+            Log::emergency($e->getMessage(), [
+                'request' => $id,
+                'file' => 'app/Services/VortechAPI/Social/PostCercle.php',
+                'line' => $e->getLine(),
+            ]);
             return $e->getMessage();
         }
     }

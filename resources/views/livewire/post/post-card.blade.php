@@ -45,7 +45,6 @@
         <img src="" alt="" class="w-100 h-auto">
         {!! $post->content !!}
         <div class="my-4 d-flex flex-column">
-            <span class="fs-5 text-muted">{{ $post->cercles[0]->name }}</span>
             <div>
                 @foreach($post->tags as $tag)
                     <span class="badge badge-light-primary">{{ $tag->tag }}</span>
@@ -64,7 +63,6 @@
         </div>
         {!! $this->info['content'] !!}
         <div class="my-4 d-flex flex-column">
-            <span class="fs-5 text-muted">{{ $cercle_name }}</span>
             <div>
                 @foreach($this->info['tags'] as $tag)
                     <span class="badge badge-light-primary">{{ $tag }}</span>
@@ -72,4 +70,34 @@
             </div>
         </div>
     @endif
+    <div class="d-flex flex-row justify-content-between align-items-center my-3">
+        <div class="text-gray-600 align-items-center">
+            <i class="fa-solid fa-eye fs-3"></i>
+            <span>{{ $post->views }}</span>
+        </div>
+        <div class="d-flex text-gray-600 align-items-center">
+            @if(!$isLiked)
+                <a wire:click="like" href="" class="text-gray-600 me-2">
+                    <i class="fa-solid fa-heart fs-3 text-gray-600" wire:loading.class="d-none"></i>
+                    <div class="spinner-grow d-none" role="status" wire:loading.class.remove="d-none">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <span wire:ignore.self>{{ number_format($countLikes) }}</span>
+                </a>
+            @else
+                <a wire:click="like" href="" class="text-info me-2">
+                    <i class="fa-solid fa-heart fs-3 text-danger" wire:loading.class="d-none"></i>
+                    <div class="spinner-grow d-none" role="status" wire:loading.class.remove="d-none">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <span wire:ignore.self>{{ number_format($countLikes) }}</span>
+                </a>
+            @endif
+            <a href="" class="me-2">
+                <i class="fa-solid fa-comment fs-3"></i>
+                <span>{{ number_format(count($post->comments)) }}</span>
+            </a>
+        </div>
+    </div>
+    <div class="separator border border-gray-300 my-5 shadow-lg"></div>
 </div>
