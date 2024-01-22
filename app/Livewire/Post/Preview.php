@@ -14,10 +14,12 @@ class Preview extends Component
     {
         $this->info = $request->all();
     }
+
     public function render()
     {
         $apiCercle = new CercleService();
         $all = collect($apiCercle->all());
+
         //dd($this->all());
         return view('livewire.post.preview', [
             'cercle_name' => $all->where('id', $this->info['cercle'])->first()->name,

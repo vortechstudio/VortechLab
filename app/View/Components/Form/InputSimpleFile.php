@@ -13,13 +13,12 @@ class InputSimpleFile extends Component
      */
     public function __construct(
         public string $name,
-        public bool   $isModel = false,
+        public bool $isModel = false,
         public string $model = '',
-        public bool  $required = false,
+        public bool $required = false,
         public string $accept = '.png, .jpg, .jpeg',
         public string $texting = 'image',
-    )
-    {
+    ) {
         //
     }
 

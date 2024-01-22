@@ -33,4 +33,4 @@ Route::middleware(['shared'])->group(function () {
     include "account.php";
 });
 
-include "auth.php";
+include 'auth.php';

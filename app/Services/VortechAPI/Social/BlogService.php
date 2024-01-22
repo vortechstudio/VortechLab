@@ -6,7 +6,6 @@ use App\Services\VortechAPI\Api;
 
 class BlogService extends Api
 {
-
     public function all()
     {
         return $this->get('blog');
@@ -31,5 +30,4 @@ class BlogService extends Api
 
         return $blogs->where('slug', $slug)->first();
     }
-
 }
