@@ -15,7 +15,7 @@ class PostList extends Component
     {
         $apiUser = new \App\Services\VortechAPI\User();
         $this->user = $apiUser->info()->user;
-        $this->posts = $this->user->posts;
+        $this->posts = collect($this->user->posts)->where('status', true);
     }
     #[Title("Profil")]
     public function render()
