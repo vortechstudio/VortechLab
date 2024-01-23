@@ -12,6 +12,7 @@ use Joelwmale\LivewireQuill\Traits\HasQuillEditor;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use RCerljenko\LaravelOpenAIModeration\Rules\OpenAIModeration;
 
 class Create extends Component
 {
@@ -103,6 +104,8 @@ class Create extends Component
 
     private function createText()
     {
+        $this->verifyContent();
+
         $this->validate([
             "title" => "required|max:200",
             "content" => "required",
@@ -128,7 +131,7 @@ class Create extends Component
         ]);
 
         if($response && !empty($this->couverture)) {
-            $this->couverture->storeAs('/posts/text/'.now()->year.'/'.now()->month.'/'.now()->day, $response->id.'.'.$this->couverture->extension());
+            $this->couverture->storePubliclyAs('posts/text/'.now()->year.'/'.now()->month.'/'.now()->day, $response->id.'.'.$this->couverture->extension(), 's3');
             $arrayFileImg->push([
                 "/posts/text/".now()->year."/".now()->month."/".now()->day."/".$response->id.".".$this->couverture->extension(),
             ]);
@@ -143,6 +146,7 @@ class Create extends Component
 
     public function createImage()
     {
+        $this->verifyContent();
         $this->validate([
             "title" => "required|max:200",
             "visibility" => "required",
@@ -157,13 +161,6 @@ class Create extends Component
             return;
         }
 
-        foreach ($this->images as $k => $image) {
-            \Storage::putFileAs('/posts/images/'.now()->year.'/'.now()->month.'/'.now()->day, new File($image['path']), $response->id.'-'.$k.'.'.$image['extension']);
-            $arrayFileImg->push([
-                "/posts/images/".now()->year."/".now()->month."/".now()->day."/".$response->id."-".$k.".".$image['extension'],
-            ]);
-        }
-
         $response = $api->create([
             "title" => $this->title,
             "contenue" => $content,
@@ -175,6 +172,13 @@ class Create extends Component
             "img_file" => $arrayFileImg->toJson(),
             "status" => $this->publish
         ]);
+
+        foreach ($this->images as $k => $image) {
+            \Storage::putFileAs('/posts/images/'.now()->year.'/'.now()->month.'/'.now()->day, new File($image['path']), $response->id.'-'.$k.'.'.$image['extension']);
+            $arrayFileImg->push([
+                "/posts/images/".now()->year."/".now()->month."/".now()->day."/".$response->id."-".$k.".".$image['extension'],
+            ]);
+        }
 
         if($response) {
             $this->alert('success', 'Poste créé avec succès');
@@ -230,5 +234,27 @@ class Create extends Component
         } else {
             $this->alert('error', 'Une erreur est survenue lors de la création du poste');
         }
+    }
+
+    private function verifyContent()
+    {
+        $moderation = new OpenAIModeration();
+        $apiUser = new User();
+
+        $moderation->validate('title', $this->title, function ($apiUser) {
+            $apiUser->post('user/avertissement', [
+                "user_uuid" => \Session::get('user')[0]->info->uuid,
+            ]);
+
+            $this->alert('error', 'Votre titre contient des propos inappropriés');
+        });
+
+        $moderation->validate('content', $this->content, function ($apiUser) {
+            $apiUser->post('user/avertissement', [
+                "user_uuid" => \Session::get('user')[0]->info->uuid,
+            ]);
+
+            $this->alert('error', 'Votre contenu contient des propos inappropriés');
+        });
     }
 }

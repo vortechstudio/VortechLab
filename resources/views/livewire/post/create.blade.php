@@ -260,7 +260,6 @@
                             required="true"
                             hint="Saisissez le lien de la vidéo que vous voulez publier (Uniquement Youtube)" />
 
-                        <div id="video_preview" class="mb-10"></div>
 
                         <div class="row">
                             <div class="col-sm-12 col-lg-3">
