@@ -27,6 +27,7 @@
         "pharaonic/livewire-tagify": "^1.2",
         "php-flasher/flasher-laravel": "^1.15",
         "php-flasher/flasher-sweetalert-laravel": "^1.15",
+        "rcerljenko/laravel-openai-moderation": "^1.1",
         "robsontenorio/mary": "^1.19",
         "salahhusa9/laravel-updater": "^1.0",
         "silviolleite/laravelpwa": "^2.0",
