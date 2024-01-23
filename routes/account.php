@@ -15,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('accountCenter')->middleware(['connected'])->group(function () {
     Route::get('/postList', \App\Livewire\AccountCenter\PostList::class)->name('accountCenter.postList');
+    Route::get('/edit', \App\Livewire\AccountCenter\EditProfil::class)->name('accountCenter.edit');
 });
