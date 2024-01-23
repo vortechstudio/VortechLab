@@ -20,6 +20,8 @@
         "laravel/sanctum": "^3.3",
         "laravel/scout": "^10.7",
         "laravel/tinker": "^2.8",
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "league/flysystem-sftp-v3": "^3.0",
         "livewire/livewire": "^3.3",
         "pharaonic/livewire-select2": "^1.2",
         "pharaonic/livewire-tagify": "^1.2",
