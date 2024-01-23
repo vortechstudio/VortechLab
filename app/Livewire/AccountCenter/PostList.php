@@ -4,6 +4,7 @@ namespace App\Livewire\AccountCenter;
 
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Session;
 
 class PostList extends Component
 {
@@ -19,7 +20,7 @@ class PostList extends Component
     #[Title("Profil")]
     public function render()
     {
-        //dd($this->user);
+        //dd($this->user->info->uuid, Session::get('user_uuid'));
         return view('livewire.account-center.post-list')
             ->layout('components.layouts.app');
     }
