@@ -44,6 +44,16 @@
                         </div>
                     </div>
                 </div>
+                @if($user->info->uuid == Session::get('user_uuid')[0])
+                    <div class="d-flex flex-row gap-5">
+                        <!--<a href="" class="btn btn-sm btn-circle btn-icon btn-outline btn-outline-dark">
+                            <i class="fa-solid fa-cog"></i>
+                        </a>-->
+                        <a href="{{ route('accountCenter.edit') }}" wire:navigate class="btn btn-sm rounded-full btn-light-info">
+                            <span class="fs-3"><i class="fa-solid fa-user-edit fs-4 me-2"></i> Modifier</span>
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
