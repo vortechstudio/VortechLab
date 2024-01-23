@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c2d5cd5aba215764c947c0922b3695ad",
+    "content-hash": "884d046410d80ccbe72f77738b65b7c4",
     "packages": [
         {
             "name": "alaouy/youtube",
@@ -5624,6 +5624,62 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "rcerljenko/laravel-openai-moderation",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rcerljenko/laravel-openai-moderation.git",
+                "reference": "4e495d993ccbf8ae1ddc029f002d5ad387e43d61"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rcerljenko/laravel-openai-moderation/zipball/4e495d993ccbf8ae1ddc029f002d5ad387e43d61",
+                "reference": "4e495d993ccbf8ae1ddc029f002d5ad387e43d61",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.0|^10.0",
+                "illuminate/http": "^9.0|^10.0",
+                "illuminate/support": "^9.0|^10.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RCerljenko\\LaravelOpenAIModeration\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RCerljenko\\LaravelOpenAIModeration\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ricardo Cerljenko",
+                    "email": "ricardo.cerljenko@gmail.com",
+                    "homepage": "https://github.com/rcerljenko"
+                }
+            ],
+            "description": "Laravel package for OpenAI Moderation API",
+            "homepage": "https://github.com/rcerljenko/laravel-openai-moderation",
+            "support": {
+                "email": "ricardo.cerljenko@gmail.com",
+                "issues": "https://github.com/rcerljenko/laravel-openai-moderation/issues",
+                "source": "https://github.com/rcerljenko/laravel-openai-moderation/tree/1.1.0"
+            },
+            "time": "2023-02-27T15:19:33+00:00"
         },
         {
             "name": "robsontenorio/mary",
