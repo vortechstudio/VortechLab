@@ -22,12 +22,14 @@ Route::middleware(['shared'])->group(function () {
 
     Route::get('/test', function () {
         $userApi = new User();
-        dd($userApi->info());
+        dd(collect($userApi->info()->user->posts)->where('status', false));
     });
 
     Route::prefix('posts')->group(function () {
         Route::get('/create/{type?}', \App\Livewire\Post\Create::class)->name('posts.create');
         Route::get('/preview', \App\Livewire\Post\Preview::class)->name('posts.preview');
+        Route::get('/drafts', \App\Livewire\Post\DraftList::class)->name('posts.drafts');
+        Route::get('/draft/{id}', \App\Livewire\Post\DraftEdit::class)->name('posts.draft.edit');
     });
 
     include "account.php";

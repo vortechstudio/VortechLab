@@ -77,17 +77,17 @@
         </div>
         <div class="d-flex text-gray-600 align-items-center">
             @if(!$isLiked)
-                <a wire:click="like" href="" class="text-gray-600 me-2">
-                    <i class="fa-solid fa-heart fs-3 text-gray-600" wire:loading.class="d-none"></i>
-                    <div class="spinner-grow d-none" role="status" wire:loading.class.remove="d-none">
+                <a wire:click="like" wire:target="like" href="" class="text-gray-600 me-2">
+                    <i class="fa-solid fa-heart fs-3 text-gray-600" wire:loading.class="d-none" wire:target="like"></i>
+                    <div class="spinner-grow d-none" role="status" wire:loading.class.remove="d-none" wire:target="like">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                     <span wire:ignore.self>{{ number_format($countLikes) }}</span>
                 </a>
             @else
-                <a wire:click="like" href="" class="text-info me-2">
-                    <i class="fa-solid fa-heart fs-3 text-danger" wire:loading.class="d-none"></i>
-                    <div class="spinner-grow d-none" role="status" wire:loading.class.remove="d-none">
+                <a wire:click="like" href="" wire:target="like" class="text-info me-2">
+                    <i class="fa-solid fa-heart fs-3 text-danger" wire:target="like" wire:loading.class="d-none"></i>
+                    <div class="spinner-grow d-none" role="status" wire:target="like" wire:loading.class.remove="d-none">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                     <span wire:ignore.self>{{ number_format($countLikes) }}</span>
