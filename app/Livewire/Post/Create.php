@@ -28,6 +28,7 @@ class Create extends Component
     public $cercleList;
     public $tagsList;
     public $user;
+    public $publish = false;
 
     public function mount()
     {
@@ -122,7 +123,8 @@ class Create extends Component
             "cercle" => $this->cercle,
             "tags" => $this->tags,
             "type" => "text",
-            "user_id" => $this->user->id
+            "user_id" => $this->user->id,
+            "status" => $this->publish
         ]);
 
         if($response && !empty($this->couverture)) {
@@ -170,7 +172,8 @@ class Create extends Component
             "tags" => $this->tags,
             "type" => "image",
             "user_id" => $this->user->id,
-            "img_file" => $arrayFileImg->toJson()
+            "img_file" => $arrayFileImg->toJson(),
+            "status" => $this->publish
         ]);
 
         if($response) {
@@ -217,7 +220,8 @@ class Create extends Component
             "tags" => $tags,
             "type" => "video",
             "user_id" => $this->user->id,
-            "video_link" => $this->video_link
+            "video_link" => $this->video_link,
+            "status" => $this->publish
         ]);
 
         if($response) {
