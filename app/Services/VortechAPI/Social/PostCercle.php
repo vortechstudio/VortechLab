@@ -30,6 +30,20 @@ class PostCercle extends Api
         }
     }
 
+    public function update(array $request, int $id)
+    {
+        try {
+            return $this->put('posts/'.$id, $request);
+        } catch (\Exception $e) {
+            \Log::emergency($e->getMessage(), [
+                'request' => $request,
+                'file' => 'app/Services/VortechAPI/Social/PostCercle.php',
+            ]);
+
+            return $e->getMessage();
+        }
+    }
+
     public function like(int $id)
     {
 
@@ -71,6 +85,15 @@ class PostCercle extends Api
     {
         try {
             return $this->get('posts', $request);
+        }catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function info(int $id)
+    {
+        try {
+            return $this->get('posts/'.$id);
         }catch (\Exception $e) {
             return $e->getMessage();
         }

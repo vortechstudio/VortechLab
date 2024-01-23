@@ -18,6 +18,8 @@ class InputSimpleFile extends Component
         public bool $required = false,
         public string $accept = '.png, .jpg, .jpeg',
         public string $texting = 'image',
+        public bool $defaultImg = false,
+        public string $imgFile = '',
     ) {
         //
     }
