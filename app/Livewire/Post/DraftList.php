@@ -30,7 +30,7 @@ class DraftList extends Component
 
     public function editing(int $id)
     {
-        $this->redirectRoute('posts.draft.edit', $id);
+        $this->redirectRoute('posts.draft.edit', ['id' => $id]);
     }
     public function render()
     {
