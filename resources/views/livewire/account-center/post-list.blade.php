@@ -63,24 +63,24 @@
             <div class="card shadow-lg">
                 <div class="card-header">
                     <div class="card-title">
-                        <ul class="nav nav-tabs d-flex flex-wrap align-items-center p-5 gap-5">
+                        <ul class="nav nav-tabs d-flex flex-wrap align-items-center p-5 gap-5" wire:ignore>
                             <li class="nav-item">
-                                <a href="#"  data-bs-toggle="tab" class="nav-link active">
+                                <a href="#posts"  data-bs-toggle="tab" class="nav-link active">
                                     <span class="fw-bolder text-inverse-light fs-2 pb-5">Posts</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#"  data-bs-toggle="tab" class="nav-link">
+                                <a href="#comments"  data-bs-toggle="tab" class="nav-link">
                                     <span class="fw-bolder text-inverse-light fs-2 pb-5">Commentaires</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#"  data-bs-toggle="tab" class="nav-link">
+                                <a href="#favoris"  data-bs-toggle="tab" class="nav-link">
                                     <span class="fw-bolder text-inverse-light fs-2 pb-5">Favoris</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#"  data-bs-toggle="tab" class="nav-link">
+                                <a href="#sujets"  data-bs-toggle="tab" class="nav-link">
                                     <span class="fw-bolder text-inverse-light fs-2 pb-5">Sujets</span>
                                 </a>
                             </li>
@@ -89,14 +89,90 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="contentTab">
-                        <div class="tab-pane fade show active" wire:poll.5s id="posts" role="tabpanel">
+                        <div class="tab-pane fade show active" id="posts" role="tabpanel">
                             @if(count($user->posts) > 0)
                                 @foreach($user->posts as $post)
                                     @livewire('post.post-card', ['post' => $post, "user" => $user], key($post->id))
                                 @endforeach
+                                @if($posts->count() > $this->limit)
+                                    <div class="d-flex flex-center">
+                                        <button wire:click="loadMore" class="btn btn-lg rounded-5 btn-outline btn-outline-primary w-25" wire:loading.attr="disabled">
+                                            <span wire:loading.class="d-none">PLUS</span>
+                                            <span class="d-none" wire:loading.class.remove="d-none">
+                                                Chargement... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                @endif
                             @else
                                 <x-base.is-null text="Vous n'avez poster aucun poste actuellement"/>
                             @endif
+                        </div>
+                        <div class="tab-pane fade" id="comments" role="tabpanel">
+                            @if(count($comments) > 0)
+                                @foreach($comments as $comment)
+                                    <div class="card shadow-lg mb-5">
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div class="symbol symbol-50px symbol-circle me-5">
+                                                        <img alt="Logo" src="{{ $user->info->social->profil_img_link }}" />
+                                                    </div>
+                                                    <div class="d-flex flex-column fs-2 fw-semibold text-inverse-light">
+                                                        <span class="me-2">{{ $user->info->name }}</span>
+                                                        <span class="fs-5 text-muted">
+                                                            @if(carbonify($comment->updated_at)->startOfDay() >= now()->startOfDay())
+                                                                {{ carbonify($comment->updated_at)->diffForHumans() }}
+                                                            @else
+                                                                {{ carbonify($comment->updated_at)->isoFormat('LL') }}
+                                                            @endif
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-toolbar"></div>
+                                        </div>
+                                        <div class="card-body">
+                                            <span class="">{!! $comment->text !!}</span>
+                                            @if($comment->post)
+                                                <div class="d-flex flex-row align-items-center bg-light-primary rounded-2 shadow mt-3 p-5">
+                                                    <div class="symbol symbol-35px me-3">
+                                                        <img alt="Logo" src="{{ $comment->post->img_file ? json_decode($comment->post->img_file, true)[0] : '' }}" />
+                                                    </div>
+                                                    <span class="fs-5 text-gray-400">{{ $comment->post->title }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                                @if($comments->count() > $this->limit)
+                                    <div class="d-flex flex-center">
+                                        <button wire:click="loadMore" class="btn btn-lg rounded-5 btn-outline btn-outline-primary w-25" wire:loading.attr="disabled">
+                                            <span wire:loading.class="d-none">PLUS</span>
+                                            <span class="d-none" wire:loading.class.remove="d-none">
+                                            Chargement... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                        </button>
+                                    </div>
+                                    @else
+                                    <div class="d-flex flex-center">
+                                        <span class="fs-3 text-muted">Vous avez tous vu</span>
+                                    </div>
+                                @endif
+                            @else
+                                <x-base.is-null text="Vous n'avez poster aucun commentaire actuellement"/>
+                            @endif
+                        </div>
+                        <div class="tab-pane fade" id="favoris" role="tabpanel">
+                            <x-base.is-null
+                                text="Vous n'avez aucun contenu dans vos favoris." />
+                        </div>
+                        <div class="tab-pane fade" id="sujets" role="tabpanel">
+                            <x-base.is-null
+                                text="Vous n'avez pas encore participé à un sujet." />
+                            <a href="" class="btn btn-sm btn-light-primary rounded-full">
+                                Voir les sujets recommandés
+                            </a>
                         </div>
                     </div>
                 </div>
