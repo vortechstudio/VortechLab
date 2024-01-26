@@ -23,6 +23,7 @@ class EditProfil extends Component
         $this->user = $apiUser->info()->user;
         $this->name = $this->user->info->name;
         $this->signature = $this->user->info->social->signature;
+
     }
 
     public function save()
@@ -37,8 +38,12 @@ class EditProfil extends Component
         if (isset($this->profil_img)) {
             try {
                 $profil_img = $this->profil_img;
-                $profil_img->storePubliclyAs('user/'.$this->user->info->id.'/', 'profil.'.$profil_img->extension(), 's3');
+                $profil_img->storePubliclyAs('user/'.$this->user->info->id.'/', 'profil.'.$profil_img->extension(), 'sftp');
             }catch (Exception $e) {
+                \Log::emergency("Erreur lors de l'upload de l'image de profil : ".$e->getMessage(), [
+                    "file" => $e->getFile(),
+                    "line" => $e->getLine(),
+                ]);
                 $this->alert('error', 'Erreur lors de l\'upload de l\'image de profil');
             }
         }
@@ -46,8 +51,12 @@ class EditProfil extends Component
         if (isset($this->header_img)) {
             try {
                 $header_img = $this->header_img;
-                $header_img->storePubliclyAs('user/'.$this->user->info->id.'/', 'header_profil.'.$header_img->extension(), 's3');
+                $header_img->storePubliclyAs('user/'.$this->user->info->id.'/', 'header_profil.'.$header_img->extension(), 'sftp');
             }catch (Exception $e) {
+                \Log::emergency("Erreur lors de l'upload de l'image de profil : ".$e->getMessage(), [
+                    "file" => $e->getFile(),
+                    "line" => $e->getLine(),
+                ]);
                 $this->alert('error', 'Erreur lors de l\'upload de l\'image de header');
             }
         }
@@ -55,11 +64,11 @@ class EditProfil extends Component
         $update = $apiUser->update([
             "name" => $this->name,
             "signature" => $this->signature,
-            "profil_img" => isset($this->profil_img) ? \Storage::disk('s3')->url('user/'.$this->user->info->id.'/profil.'.$this->profil_img->extension()) : null,
-            "header_img" => isset($this->header_img) ? \Storage::disk('s3')->url('user/'.$this->user->info->id.'/header_profil.'.$this->header_img->extension()) : null,
+            "profil_img" => isset($this->profil_img) ? \Storage::disk('sftp')->url('user/'.$this->user->info->id.'/profil.'.$this->profil_img->extension()) : null,
+            "header_img" => isset($this->header_img) ? \Storage::disk('sftp')->url('user/'.$this->user->info->id.'/header_profil.'.$this->header_img->extension()) : null,
         ]);
 
-        if($update->success) {
+        if($update->status == 'success') {
             $this->alert('success', 'Profil mis à jour');
             $this->redirectRoute('account-center.postList');
         } else {

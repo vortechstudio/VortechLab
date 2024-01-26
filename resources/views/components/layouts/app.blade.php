@@ -13,6 +13,16 @@
         @vite(['resources/css/app.css'])
         @yield("styles")
         @stack("styles")
+        @laravelPWA
+        <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+        <script>
+            window.OneSignalDeferred = window.OneSignalDeferred || [];
+            OneSignalDeferred.push(function(OneSignal) {
+                OneSignal.init({
+                    appId: "2fcd29bd-221e-4204-8ad7-09aade72629f",
+                });
+            });
+        </script>
     </head>
     <body id="body" class="header-fixed header-tablet-and-mobile-fixed bgi-no-repeat bgi-position-y-top bgi-size-cover w-100 h-350px" style="background-image: url({{ asset('/storage/wall/default.png') }})">
 

@@ -1,5 +1,7 @@
-var staticCacheName = "pwa-v" + new Date().getTime();
-var filesToCache = [
+const VERSION = 'v2';
+const staticCacheName = location.protocol + "//" + location.host;
+const PREFIX = "V1"
+const filesToCache = [
     '/offline',
     '/css/app.css',
     '/js/app.js',
@@ -15,38 +17,55 @@ var filesToCache = [
 
 // Cache on install
 self.addEventListener("install", event => {
-    this.skipWaiting();
+    self.skipWaiting();
     event.waitUntil(
-        caches.open(staticCacheName)
-            .then(cache => {
-                return cache.addAll(filesToCache);
-            })
+        (async () => {
+            const cache = await caches.open(PREFIX);
+        })()
     )
+    console.log(`${PREFIX} Install`);
 });
 
 // Clear cache on activate
 self.addEventListener('activate', event => {
+    clients.claim();
     event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames
-                    .filter(cacheName => (cacheName.startsWith("pwa-")))
-                    .filter(cacheName => (cacheName !== staticCacheName))
-                    .map(cacheName => caches.delete(cacheName))
+        (async () => {
+            const keys = await caches.keys();
+            await Promise.all(
+                keys.map((key) => {
+                    if (!key.includes(PREFIX)) {
+                        return caches.delete(key);
+                    }
+                })
             );
-        })
+        })()
     );
+    console.log(`${PREFIX} Active`);
 });
 
 // Serve from Cache
 self.addEventListener("fetch", event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                return response || fetch(event.request);
-            })
-            .catch(() => {
-                return caches.match('offline');
-            })
-    )
+    console.log(
+        `${PREFIX} Fetching : ${event.request.url}, Mode : ${event.request.mode}`
+    );
+    if (event.request.mode === "navigate") {
+        event.respondWith(
+            (async () => {
+                try {
+                    const preloadResponse = await event.preloadResponse;
+                    if (preloadResponse) {
+                        return preloadResponse;
+                    }
+
+                    return await fetch(event.request);
+                } catch (e) {
+                    const cache = await caches.open(PREFIX);
+                    return await cache.match("/offline");
+                }
+            })()
+        );
+    } else if (filesToCache.includes(event.request.url)) {
+        event.respondWith(caches.match(event.request));
+    }
 });

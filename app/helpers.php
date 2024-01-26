@@ -6,3 +6,10 @@ if (! function_exists('carbonify')) {
         return \Carbon\Carbon::parse($date);
     }
 }
+
+if (! function_exists('storageToUrl')) {
+    function storageToUrl(string $uri): string
+    {
+        return '//s3.'.config('app.domain').'/'.$uri;
+    }
+}

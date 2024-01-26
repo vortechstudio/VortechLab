@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    'default' => env('FILESYSTEM_DISK', 'sftp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -62,7 +62,8 @@ return [
             'username' => env('SFTP_USERNAME'),
             'password' => env('SFTP_PASSWORD'),
             'visibility' => 'public',
-            'directory_visibility' => 'public'
+            'directory_visibility' => 'public',
+            'root' => env('SFTP_ROOT'),
         ]
 
     ],
