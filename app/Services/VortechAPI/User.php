@@ -24,4 +24,20 @@ class User extends Api
             'header_img' => $request['header_img'],
         ]);
     }
+
+    public function updateOptin($optin)
+    {
+        return $this->put('user/profil/optin', [
+            'user_uuid' => \Session::get('user_uuid'),
+            'optin' => $optin,
+        ]);
+    }
+
+    public function updateNotifin($notifin)
+    {
+        return $this->put('user/profil/notifin', [
+            'user_uuid' => \Session::get('user_uuid'),
+            'notifin' => $notifin,
+        ]);
+    }
 }
