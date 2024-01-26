@@ -40,4 +40,27 @@ class User extends Api
             'notifin' => $notifin,
         ]);
     }
+
+    public function logout()
+    {
+        return $this->delete('user/logout', [
+            'user_uuid' => \Session::get('user_uuid'),
+        ]);
+    }
+
+    public function ban($id)
+    {
+        return $this->post('user/ban', [
+            'user_uuid' => \Session::get('user_uuid'),
+            'user_blocked_id' => $id,
+        ]);
+    }
+
+    public function uban($id)
+    {
+        return $this->delete('user/uban', [
+            'user_uuid' => \Session::get('user_uuid'),
+            'user_blocked_id' => $id,
+        ]);
+    }
 }

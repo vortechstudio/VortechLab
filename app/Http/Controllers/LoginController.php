@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\VortechAPI\User;
 use Illuminate\Http\Request;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -30,7 +31,18 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        \Session::flush();
+        $apiUser = new User();
+        try {
+            $apiUser->logout();
+            \Session::flush();
+        }catch (\Exception $e) {
+            \Log::emergency($e->getMessage(), [
+                "file" => $e->getFile(),
+                "line" => $e->getLine(),
+            ]);
+            flash()->addError("Déconnexion échouer", "Erreur lors de la déconnexion");
+            return redirect()->intended();
+        }
         flash()->addSuccess("Déconnexion effectuer avec succès", "A bientôt");
         return redirect()->intended();
     }
