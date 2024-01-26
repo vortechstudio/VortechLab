@@ -21,8 +21,7 @@ Route::middleware(['shared'])->group(function () {
     Route::get('/home/events', \App\Livewire\Home\Events::class)->name('home.events');
 
     Route::get('/test', function () {
-        $userApi = new User();
-        dd(collect($userApi->info()->user->posts)->where('status', false));
+        dd(Storage::url('/user/default/profil.png'));
     });
 
     Route::prefix('posts')->group(function () {
