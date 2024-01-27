@@ -16,7 +16,7 @@
         <span class="text-danger error">{{ $message }}</span>
     @enderror
     @if(isset($hint))
-        <p>{{ $hint }}</p>
+        <p class="text-muted fs-8">{{ $hint }}</p>
     @endif
 </div>
 

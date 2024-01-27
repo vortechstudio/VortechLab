@@ -8,6 +8,7 @@ use Livewire\Component;
 class SearchInput extends Component
 {
     public $query;
+
     public $results;
 
     public function mount()
@@ -20,6 +21,7 @@ class SearchInput extends Component
         $this->query = '';
         $this->results = [];
     }
+
     public function updateQuery()
     {
 
@@ -29,9 +31,10 @@ class SearchInput extends Component
     {
         $api = new Api();
         $this->results = $api->searching($this->query);
+
         //dd($this->results);
         return view('livewire.component.search-input', [
-            'results' => $this->results
+            'results' => $this->results,
         ]);
     }
 }

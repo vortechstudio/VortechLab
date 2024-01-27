@@ -1,3 +1,4 @@
+
 <div class="d-flex align-items-center ms-1 ms-lg-3">
     <!--begin::Menu- wrapper-->
     <div class="position-relative btn btn-icon btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -11,7 +12,7 @@
     </div>
     <!--begin::Menu-->
     <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true" id="kt_menu_notifications">
-        @if(!empty($user->user))
+        @if(!empty($user))
             <!--begin::Heading-->
             <div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('/assets/media/misc/menu-header-bg.jpg')">
                 <!--begin::Title-->
@@ -19,14 +20,14 @@
                     <span class="fs-8 opacity-75 ps-3">24 reports</span></h3>
                 <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
                     Message de notification
-                    <span class="fs-8 opacity-75 ps-3">({{ count($user->user->unread_notifications) }})</span>
+                    <span class="fs-8 opacity-75 ps-3">({{ count($user->info->unread_notifications) }})</span>
                 </h3>
                 <!--end::Title-->
             </div>
             <!--end::Heading-->
             <!--begin::Items-->
             <div class="scroll-y mh-325px my-5 px-8">
-                @foreach(collect($user->user->unread_notifications)->take(10) as $notification)
+                @foreach(collect($user->info->unread_notifications)->take(10) as $notification)
                     <!--begin::Item-->
                     <div class="d-flex flex-stack py-4">
                         <!--begin::Section-->

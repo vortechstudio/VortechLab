@@ -10,9 +10,9 @@
     </style>
 @endpush
 <div class="mb-10 mt-2" wire:ignore>
-    <div class="image-input image-input-empty border border-gray-500 rounded-3" data-kt-image-input="true">
+    <div class="image-input {{ !$defaultImg ?? 'image-input-empty'  }} border border-gray-500 rounded-3" data-kt-image-input="true" @if($defaultImg) style="background-image: url('{{ $imgFile }}')" @endif>
         <!--begin::Image preview wrapper-->
-        <div class="image-input-wrapper w-325px h-125px"></div>
+        <div class="image-input-wrapper w-325px h-125px" @if($defaultImg) style="background-image: url('{{ $imgFile }}')" @endif></div>
         <!--end::Image preview wrapper-->
 
         <!--begin::Edit button-->

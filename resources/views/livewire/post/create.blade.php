@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-12 col-lg-4">
+                        <div class="col-sm-12 col-lg-3">
                             <div class="mb-10">
                                 <label for="cercle" class="form-label fw-bold required">
                                     Choississez un cercle
@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-lg-4">
+                        <div class="col-sm-12 col-lg-3">
                             <label for="cercle" class="form-label fw-bold">Sujet</label>
                             <div wire:ignore>
                                 <input data-pharaonic="tagify"
@@ -76,7 +76,7 @@
                                     data-classname="tagify__inline__suggestions">
                             </div>
                         </div>
-                        <div class="col-sm-12 col-lg-4">
+                        <div class="col-sm-12 col-lg-3">
                             <label for="visibility" class="form-label fw-bold">
                                 Visibilité du poste
                                 <i class="fa-solid fa-circle-info fs-6 ms-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Qui peut voir ce poste"></i>
@@ -85,6 +85,18 @@
                                 <select id="visibility" data-pharaonic="select2" data-component-id="{{ $this->id() }}" wire:model="visibility">
                                     <option value="public">Public</option>
                                     <option value="friends">Amis et followers</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-3">
+                            <label for="publish" class="form-label fw-bold">
+                                Publication
+                                <i class="fa-solid fa-circle-info fs-6 ms-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Définir si le poste doit être publier ou rester en brouillon"></i>
+                            </label>
+                            <div wire:ignore>
+                                <select id="publish" data-pharaonic="select2" data-component-id="{{ $this->id() }}" wire:model="publish">
+                                    <option value="true">Publier</option>
+                                    <option value="false">Brouillon</option>
                                 </select>
                             </div>
                         </div>
@@ -161,7 +173,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-3">
                                 <div class="mb-10">
                                     <label for="cercle" class="form-label fw-bold required">
                                         Choississez un cercle
@@ -177,7 +189,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-3">
                                 <label for="cercle" class="form-label fw-bold">Sujet</label>
                                 <div wire:ignore>
                                     <input data-pharaonic="tagify"
@@ -190,7 +202,7 @@
                                            data-classname="tagify__inline__suggestions">
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-3">
                                 <label for="visibility" class="form-label fw-bold">
                                     Visibilité du poste
                                     <i class="fa-solid fa-circle-info fs-6 ms-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Qui peut voir ce poste"></i>
@@ -199,6 +211,18 @@
                                     <select id="visibility" data-pharaonic="select2" data-component-id="{{ $this->id() }}" wire:model="visibility">
                                         <option value="public">Public</option>
                                         <option value="friends">Amis et followers</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-3">
+                                <label for="publish" class="form-label fw-bold">
+                                    Publication
+                                    <i class="fa-solid fa-circle-info fs-6 ms-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Définir si le poste doit être publier ou rester en brouillon"></i>
+                                </label>
+                                <div wire:ignore>
+                                    <select id="publish" data-pharaonic="select2" data-component-id="{{ $this->id() }}" wire:model="publish">
+                                        <option value="true">Publier</option>
+                                        <option value="false">Brouillon</option>
                                     </select>
                                 </div>
                             </div>
@@ -236,10 +260,9 @@
                             required="true"
                             hint="Saisissez le lien de la vidéo que vous voulez publier (Uniquement Youtube)" />
 
-                        <div id="video_preview" class="mb-10"></div>
 
                         <div class="row">
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-3">
                                 <div class="mb-10">
                                     <label for="cercle" class="form-label fw-bold required">
                                         Choississez un cercle
@@ -255,7 +278,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-3">
                                 <label for="cercle" class="form-label fw-bold">Sujet</label>
                                 <div wire:ignore>
                                     <input data-pharaonic="tagify"
@@ -268,7 +291,7 @@
                                            data-classname="tagify__inline__suggestions">
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg-4">
+                            <div class="col-sm-12 col-lg-3">
                                 <label for="visibility" class="form-label fw-bold">
                                     Visibilité du poste
                                     <i class="fa-solid fa-circle-info fs-6 ms-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Qui peut voir ce poste"></i>
@@ -277,6 +300,18 @@
                                     <select id="visibility" data-pharaonic="select2" data-component-id="{{ $this->id() }}" wire:model="visibility">
                                         <option value="public">Public</option>
                                         <option value="friends">Amis et followers</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-3">
+                                <label for="publish" class="form-label fw-bold">
+                                    Publication
+                                    <i class="fa-solid fa-circle-info fs-6 ms-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Définir si le poste doit être publier ou rester en brouillon"></i>
+                                </label>
+                                <div wire:ignore>
+                                    <select id="publish" data-pharaonic="select2" data-component-id="{{ $this->id() }}" wire:model="publish">
+                                        <option value="true">Publier</option>
+                                        <option value="false">Brouillon</option>
                                     </select>
                                 </div>
                             </div>
