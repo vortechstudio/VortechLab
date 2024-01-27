@@ -8,6 +8,7 @@ use Livewire\Component;
 class DraftList extends Component
 {
     use LivewireAlert;
+
     public $posts;
 
     public function mount()
@@ -15,7 +16,7 @@ class DraftList extends Component
         $apiPost = new \App\Services\VortechAPI\Social\PostCercle();
         $this->posts = collect($apiPost->all([
             'user_id' => \Session::get('user')[0]->info->id,
-            "status" => false
+            'status' => false,
         ]));
     }
 
@@ -32,12 +33,13 @@ class DraftList extends Component
     {
         $this->redirectRoute('posts.draft.edit', ['id' => $id]);
     }
+
     public function render()
     {
         return view('livewire.post.draft-list', [
-            "texte" => $this->posts->where('type', 'text'),
-            "image" => $this->posts->where('type', 'image'),
-            "video" => $this->posts->where('type', 'video'),
+            'texte' => $this->posts->where('type', 'text'),
+            'image' => $this->posts->where('type', 'image'),
+            'video' => $this->posts->where('type', 'video'),
         ])
             ->layout('components.layouts.app');
     }

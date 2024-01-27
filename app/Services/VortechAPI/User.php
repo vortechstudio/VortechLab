@@ -2,8 +2,6 @@
 
 namespace App\Services\VortechAPI;
 
-use Illuminate\Http\Request;
-
 class User extends Api
 {
     public function info()

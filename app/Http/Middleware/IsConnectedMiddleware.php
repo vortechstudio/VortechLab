@@ -13,6 +13,7 @@ class IsConnectedMiddleware
             return $next($request);
         } else {
             flash()->addError('Vous devez être connecté pour accéder à cette page');
+
             return redirect()->route('home');
         }
     }

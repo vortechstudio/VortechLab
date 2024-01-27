@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'enabled' => env('OPENAI_ENABLE_MODERATION_RULE', false),
+    'enabled' => env('OPENAI_ENABLE_MODERATION_RULE', false),
 
-	'api_key' => env('OPENAI_API_KEY'),
+    'api_key' => env('OPENAI_API_KEY'),
 ];

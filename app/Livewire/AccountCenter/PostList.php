@@ -10,9 +10,13 @@ use Session;
 class PostList extends Component
 {
     use WithPagination;
+
     public $posts;
+
     public $user;
+
     public $comments;
+
     public $limit = 5;
 
     public function mount()
@@ -29,7 +33,7 @@ class PostList extends Component
         $this->limit += 5;
     }
 
-    #[Title("Profil")]
+    #[Title('Profil')]
     public function render()
     {
         //dd($this->user->info->uuid, Session::get('user_uuid'));
