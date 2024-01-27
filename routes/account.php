@@ -20,5 +20,6 @@ Route::prefix('accountCenter')->middleware(['connected'])->group(function () {
     Route::prefix('setting')->group(function () {
         Route::get('/privacy', \App\Livewire\AccountCenter\Setting\Privacy::class)->name('accountCenter.setting.privacy');
         Route::get('/blacklist', \App\Livewire\AccountCenter\Setting\Blacklist::class)->name('accountCenter.setting.blacklist');
+        Route::get('/system', \App\Livewire\AccountCenter\Setting\System::class)->name('accountCenter.setting.system');
     });
 });

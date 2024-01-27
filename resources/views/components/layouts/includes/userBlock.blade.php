@@ -66,7 +66,7 @@
             <!--end::Menu item-->
             <!--begin::Menu item-->
             <div class="menu-item px-5">
-                <a href="#" class="menu-link px-5 fs-4">
+                <a href="{{ route('accountCenter.setting.blacklist') }}" class="menu-link px-5 fs-4">
                     <span class="menu-icon me-2">
                         <i class="fa-solid fa-user-lock fs-3 text-gray-400"></i>
                     </span>

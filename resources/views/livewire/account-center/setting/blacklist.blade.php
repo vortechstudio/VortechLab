@@ -3,7 +3,7 @@
         <div class="col-sm-12 col-lg-4 mb-10 bg-light p-5">
             <div class="menu menu-rounded menu-column menu-active-bg menu-hover-bg menu-title-gray-700 fs-5 fw-semibold" id="aside_menu" data-kt-menu="true">
                 <div class="menu-item">
-                    <a href="{{ route('accountCenter.setting.privacy') }}" class="menu-link active border-3 border-start border-transparent">
+                    <a href="{{ route('accountCenter.setting.privacy') }}" wire:navigate class="menu-link active border-3 border-start border-transparent">
                         <span class="menu-icon">
                             <i class="fa-solid fa-user-secret fs-3 text-gray-400"></i>
                         </span>
@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a href="{{ route('accountCenter.setting.blacklist') }}" class="menu-link active border-3 border-start border-primary">
+                    <a href="{{ route('accountCenter.setting.blacklist') }}" wire:navigate class="menu-link active border-3 border-start border-primary">
                         <span class="menu-icon">
                             <i class="fa-solid fa-user-lock fs-3 text-gray-400"></i>
                         </span>
@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a href="" class="menu-link border-3 border-start border-transparent">
+                    <a href="{{ route('accountCenter.setting.system') }}" wire:navigate class="menu-link border-3 border-start border-transparent">
                         <span class="menu-icon">
                             <i class="fa-solid fa-cogs fs-3 text-gray-400"></i>
                         </span>
