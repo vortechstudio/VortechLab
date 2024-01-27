@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        if(config('app.env') === 'local' || config('app.env') === 'staging') {
+        if (config('app.env') === 'local' || config('app.env') === 'staging') {
             $schedule->command('log-viewer:clear')->daily();
         }
 

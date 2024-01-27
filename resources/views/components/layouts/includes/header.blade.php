@@ -38,7 +38,7 @@
                     </div>
                     <!--begin::Menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column w-250px w-lg-325px" data-kt-menu="true">
-                        @auth()
+                        @if(Session::has('user'))
                             <!--begin:Nav-->
                             <div class="row g-0">
                                 <!--begin:Item-->
@@ -65,7 +65,7 @@
                             <!--end:Nav-->
                             <!--begin::View more-->
                             <div class="py-2 text-center border-top">
-                                <a href="pages/user-profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary">Brouillon (0)
+                                <a href="{{ route('posts.drafts') }}" class="btn btn-color-gray-600 btn-active-color-primary">Brouillon ({{ collect(Session::get('user')[0]->posts)->where('status', false)->count() }})
                                     <i class="ki-duotone ki-arrow-right fs-5">
                                         <span class="path1"></span>
                                         <span class="path2"></span>

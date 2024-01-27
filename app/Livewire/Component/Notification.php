@@ -12,8 +12,9 @@ class Notification extends Component
     public function mount()
     {
         $userApi = new User();
-        $this->user = $userApi->info();
+        $this->user = $userApi->info()->user;
     }
+
     public function render()
     {
 

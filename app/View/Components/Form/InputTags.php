@@ -24,9 +24,8 @@ class InputTags extends Component
         public bool $isModel = false,
         public string $model = '',
         public ?string $hint = null,
-        public string $suggestions = "",
-    )
-    {
+        public string $suggestions = '',
+    ) {
         //
     }
 

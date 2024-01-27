@@ -12,6 +12,7 @@ use Joelwmale\LivewireQuill\Traits\HasQuillEditor;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use RCerljenko\LaravelOpenAIModeration\Rules\OpenAIModeration;
 
 class Create extends Component
 {
@@ -28,6 +29,7 @@ class Create extends Component
     public $cercleList;
     public $tagsList;
     public $user;
+    public $publish = false;
 
     public function mount()
     {
@@ -36,7 +38,7 @@ class Create extends Component
         $apiUser = new User();
         $this->cercleList = $apiCercle->all();
         $this->tagsList = $apiPosts->tags();
-        $this->user = \Session::has('user_uuid') ? $apiUser->info()->user : null;
+        $this->user = \Session::has('user_uuid') ? $apiUser->info()->user->info : null;
         //dd($this->tagsList);
     }
 
@@ -102,6 +104,8 @@ class Create extends Component
 
     private function createText()
     {
+        $this->verifyContent();
+
         $this->validate([
             "title" => "required|max:200",
             "content" => "required",
@@ -110,6 +114,7 @@ class Create extends Component
         ]);
 
         $api = new PostCercle();
+        $arrayFileImg = collect();
         if($this->user == null) {
             $this->alert('error', 'Vous devez être connecté pour créer un poste');
             return;
@@ -121,11 +126,15 @@ class Create extends Component
             "cercle" => $this->cercle,
             "tags" => $this->tags,
             "type" => "text",
-            "user_id" => $this->user->id
+            "user_id" => $this->user->id,
+            "status" => $this->publish
         ]);
 
         if($response && !empty($this->couverture)) {
-            $this->couverture->storeAs('/posts/text/'.now()->year.'/'.now()->month.'/'.now()->day, $response->id.'.'.$this->couverture->extension());
+            $this->couverture->storePubliclyAs('posts/text/'.now()->year.'/'.now()->month.'/'.now()->day, $response->id.'.'.$this->couverture->extension(), 's3');
+            $arrayFileImg->push([
+                "/posts/text/".now()->year."/".now()->month."/".now()->day."/".$response->id.".".$this->couverture->extension(),
+            ]);
         }
         if($response) {
             $this->alert('success', 'Poste créé avec succès');
@@ -137,6 +146,7 @@ class Create extends Component
 
     public function createImage()
     {
+        $this->verifyContent();
         $this->validate([
             "title" => "required|max:200",
             "visibility" => "required",
@@ -145,10 +155,12 @@ class Create extends Component
 
         $api = new PostCercle();
         $content = empty($this->content) ? $this->defineImagesContent() : $this->content;
+        $arrayFileImg = collect();
         if($this->user == null) {
             $this->alert('error', 'Vous devez être connecté pour créer un poste');
             return;
         }
+
         $response = $api->create([
             "title" => $this->title,
             "contenue" => $content,
@@ -156,14 +168,16 @@ class Create extends Component
             "cercle" => $this->cercle,
             "tags" => $this->tags,
             "type" => "image",
-            "user_id" => $this->user->id
+            "user_id" => $this->user->id,
+            "img_file" => $arrayFileImg->toJson(),
+            "status" => $this->publish
         ]);
 
-
-        if($response) {
-            foreach ($this->images as $k => $image) {
-                \Storage::putFileAs('/posts/images/'.now()->year.'/'.now()->month.'/'.now()->day, new File($image['path']), $response->id.'-'.$k.'.'.$image['extension']);
-            }
+        foreach ($this->images as $k => $image) {
+            \Storage::putFileAs('/posts/images/'.now()->year.'/'.now()->month.'/'.now()->day, new File($image['path']), $response->id.'-'.$k.'.'.$image['extension']);
+            $arrayFileImg->push([
+                "/posts/images/".now()->year."/".now()->month."/".now()->day."/".$response->id."-".$k.".".$image['extension'],
+            ]);
         }
 
         if($response) {
@@ -210,7 +224,8 @@ class Create extends Component
             "tags" => $tags,
             "type" => "video",
             "user_id" => $this->user->id,
-            "video_link" => $this->video_link
+            "video_link" => $this->video_link,
+            "status" => $this->publish
         ]);
 
         if($response) {
@@ -219,5 +234,27 @@ class Create extends Component
         } else {
             $this->alert('error', 'Une erreur est survenue lors de la création du poste');
         }
+    }
+
+    private function verifyContent()
+    {
+        $moderation = new OpenAIModeration();
+        $apiUser = new User();
+
+        $moderation->validate('title', $this->title, function ($apiUser) {
+            $apiUser->post('user/avertissement', [
+                "user_uuid" => \Session::get('user')[0]->info->uuid,
+            ]);
+
+            $this->alert('error', 'Votre titre contient des propos inappropriés');
+        });
+
+        $moderation->validate('content', $this->content, function ($apiUser) {
+            $apiUser->post('user/avertissement', [
+                "user_uuid" => \Session::get('user')[0]->info->uuid,
+            ]);
+
+            $this->alert('error', 'Votre contenu contient des propos inappropriés');
+        });
     }
 }
