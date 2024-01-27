@@ -32,7 +32,7 @@ Route::middleware(['shared'])->group(function () {
         Route::get('/draft/{id}', \App\Livewire\Post\DraftEdit::class)->name('posts.draft.edit');
     });
 
-    include "account.php";
+    include 'account.php';
 });
 
 include 'auth.php';

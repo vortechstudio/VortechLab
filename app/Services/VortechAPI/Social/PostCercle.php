@@ -49,7 +49,7 @@ class PostCercle extends Api
 
         try {
             return $this->post('posts/'.$id.'/like', [
-                "user_id" => \Session::get('user')[0]->info->id,
+                'user_id' => \Session::get('user')[0]->info->id,
             ]);
         } catch (\Exception $e) {
             Log::emergency($e->getMessage(), [
@@ -57,6 +57,7 @@ class PostCercle extends Api
                 'file' => 'app/Services/VortechAPI/Social/PostCercle.php',
                 'line' => $e->getLine(),
             ]);
+
             return $e->getMessage();
         }
     }
@@ -66,10 +67,11 @@ class PostCercle extends Api
 
         try {
             $post = collect($this->all([]))->where('id', $id)->first();
+
             return $this->post('posts/'.$id.'/unlike', [
-                "user_id" => \Session::get('user')[0]->info->id,
-                "likeable_type" => get_class($post),
-                "id" => $post->id
+                'user_id' => \Session::get('user')[0]->info->id,
+                'likeable_type' => get_class($post),
+                'id' => $post->id,
             ]);
         } catch (\Exception $e) {
             Log::emergency($e->getMessage(), [
@@ -77,15 +79,16 @@ class PostCercle extends Api
                 'file' => 'app/Services/VortechAPI/Social/PostCercle.php',
                 'line' => $e->getLine(),
             ]);
+
             return $e->getMessage();
         }
     }
 
-    public function all(array|null $request)
+    public function all(?array $request)
     {
         try {
             return $this->get('posts', $request);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
@@ -94,7 +97,7 @@ class PostCercle extends Api
     {
         try {
             return $this->get('posts/'.$id);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
@@ -103,7 +106,7 @@ class PostCercle extends Api
     {
         try {
             return $this->delete('posts/'.$id);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $e->getMessage();
         }
     }

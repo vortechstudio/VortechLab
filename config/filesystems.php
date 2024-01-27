@@ -64,7 +64,7 @@ return [
             'visibility' => 'public',
             'directory_visibility' => 'public',
             'root' => env('SFTP_ROOT'),
-        ]
+        ],
 
     ],
 

@@ -9,11 +9,14 @@ use Livewire\Component;
 class Privacy extends Component
 {
     use LivewireAlert;
+
     public $user;
+
     public $optin;
+
     public $notifin;
 
-public function mount()
+    public function mount()
     {
         $apiUser = new User();
         $this->user = $apiUser->info()->user;
@@ -29,7 +32,7 @@ public function mount()
         try {
             $apiUser->updateOptin($this->optin);
             $this->alert('success', 'Vos paramètres ont été mis à jour');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             \Log::emergency($e->getMessage(), [
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
@@ -44,7 +47,7 @@ public function mount()
         try {
             $apiUser->updateNotifin($this->notifin);
             $this->alert('success', 'Vos paramètres ont été mis à jour');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             \Log::emergency($e->getMessage(), [
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
@@ -52,6 +55,7 @@ public function mount()
             $this->alert('error', $e->getMessage());
         }
     }
+
     public function render()
     {
         return view('livewire.account-center.setting.privacy');

@@ -9,7 +9,9 @@ use Livewire\Component;
 class Blacklist extends Component
 {
     use LivewireAlert;
+
     public $user;
+
     public $blacklists;
 
     public function mount()
@@ -25,7 +27,7 @@ class Blacklist extends Component
         try {
             $apiUser->uban($id);
             $this->alert('success', 'Vos paramètres ont été mis à jour');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             \Log::emergency($e->getMessage(), [
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
@@ -33,6 +35,7 @@ class Blacklist extends Component
             $this->alert('error', $e->getMessage());
         }
     }
+
     public function render()
     {
         return view('livewire.account-center.setting.blacklist');

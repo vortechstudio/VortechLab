@@ -10,7 +10,7 @@ class Api
 
     public function __construct()
     {
-        $this->endpoint = 'https://auth.' . config('app.domain') . '/api/';
+        $this->endpoint = 'https://auth.'.config('app.domain').'/api/';
     }
 
     public function searching($terme, $category = null)
@@ -35,7 +35,7 @@ class Api
     public function get(string $action, array $params = [])
     {
         $builder = http_build_query($params);
-        $url = $this->endpoint . $action . '?' . $builder;
+        $url = $this->endpoint.$action.'?'.$builder;
 
         $request = Http::withoutVerifying()
             ->get($url);
@@ -45,7 +45,7 @@ class Api
 
     public function post(string $action, array $params = [])
     {
-        $url = $this->endpoint . $action;
+        $url = $this->endpoint.$action;
 
         try {
             $request = Http::withoutVerifying()
@@ -64,7 +64,7 @@ class Api
 
     public function put(string $action, array $params = [])
     {
-        $url = $this->endpoint . $action;
+        $url = $this->endpoint.$action;
 
         $request = Http::withoutVerifying()
             ->put($url, $params);
@@ -74,11 +74,11 @@ class Api
 
     public function putWithFile(string $action, array $params = [], array $files = [])
     {
-        $url = $this->endpoint . $action;
+        $url = $this->endpoint.$action;
 
         $request = Http::withoutVerifying();
 
-        if (!empty($params)) {
+        if (! empty($params)) {
             $request = $request->asForm()->withBody(http_build_query($params), 'application/x-www-form-urlencoded');
         }
 
@@ -104,7 +104,7 @@ class Api
 
     public function delete(string $action, array $params = [])
     {
-        $url = $this->endpoint . $action;
+        $url = $this->endpoint.$action;
 
         $request = Http::withoutVerifying()
             ->delete($url, $params);
@@ -114,7 +114,7 @@ class Api
 
     public function patch(string $action, array $params = [])
     {
-        $url = $this->endpoint . $action;
+        $url = $this->endpoint.$action;
 
         $request = Http::withoutVerifying()
             ->patch($url, $params);
