@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Spatie\Sitemap\SitemapGenerator;
+use Spatie\Sitemap\Tags\Url;
 
 class SitemapCreate extends Command
 {
@@ -27,6 +28,9 @@ class SitemapCreate extends Command
     public function handle()
     {
         SitemapGenerator::create(config('app.url'))
+            ->getSitemap()
+            ->add(Url::create('/home/timeline'))
+            ->add(Url::create('/home/events'))
             ->writeToFile(public_path('sitemap.xml'));
     }
 }
